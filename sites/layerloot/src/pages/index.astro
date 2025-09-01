@@ -13,12 +13,41 @@ const sampleDeals = [
   { store: "Overture", item: "PLA+ 1kg", price: "$12.99", code: "AUTO", ends: "Lightning deal" },
 ];
 ---
+
 <html lang="en" class="bg-black">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+
     <title>LayerLoot — 3D Printing Deals</title>
+    <meta name="description" content="Daily discounts on 3D printers, filament, resin, and must-have upgrades. Clean curation. Some links may be affiliate-supported." />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.layerloot.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="LayerLoot — 3D Printing Deals" />
+    <meta property="og:description" content="Daily discounts on 3D printers, filament, resin, and must-have upgrades." />
+    <meta property="og:url" content="https://www.layerloot.com/" />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LayerLoot — 3D Printing Deals" />
+    <meta name="twitter:description" content="Daily discounts on 3D printers, filament, resin, and must-have upgrades." />
+    <meta name="twitter:image" content="/og-image.jpg" />
+
+    <!-- Favicons / PWA (add files in /public when ready) -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0B0B0B" />
+
+    <!-- (Optional) HSTS hint; usually set at the edge/CDN -->
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
   </head>
+
   <body class="min-h-screen text-white selection:bg-emerald-300/20">
     <section class="relative overflow-hidden">
       <div aria-hidden class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.15),transparent_55%)]"></div>
@@ -30,13 +59,17 @@ const sampleDeals = [
           Some links are affiliate-supported—helps keep alerts free.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a href="mailto:contact@layerloot.com?subject=Join%20LayerLoot%20Waitlist&body=Please%20add%20me%20to%20LayerLoot%20deal%20alerts."
-             class="inline-flex items-center rounded-2xl px-6 py-3 text-base font-semibold shadow-lg transition hover:opacity-90"
-             style={`background:${brand.green};color:#020617`}>
+          <a
+            href="mailto:contact@layerloot.com?subject=Join%20LayerLoot%20Waitlist&body=Please%20add%20me%20to%20LayerLoot%20deal%20alerts."
+            class="inline-flex items-center rounded-2xl px-6 py-3 text-base font-semibold shadow-lg transition hover:opacity-90"
+            style={`background:${brand.green};color:#020617`}
+          >
             Join the waitlist
           </a>
-          <a href="#how-it-works"
-             class="inline-flex items-center rounded-2xl border border-zinc-800 px-6 py-3 text-base font-semibold text-zinc-200 transition hover:bg-zinc-900">
+          <a
+            href="#how-it-works"
+            class="inline-flex items-center rounded-2xl border border-zinc-800 px-6 py-3 text-base font-semibold text-zinc-200 transition hover:bg-zinc-900"
+          >
             How it works
           </a>
         </div>
