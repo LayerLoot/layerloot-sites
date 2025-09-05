@@ -1,43 +1,46 @@
 [
+  [
   {
-  "id": "mh-bambu-p1s-combo",
-  "merchant": "MatterHackers",
-  "title": "Bambu Lab P1S Combo (with AMS)",
-  "cta": "$150 off (~15%) — now $819",
-  "url": "https://www.matterhackers.com/store/l/bambu-lab-p1s-3d-printer/sk/M8DMRAAJ",
-  "code": "",
-  "price": "$819",
-  "note": "In-stock — ships tomorrow",
-  "expiresAt": "2025-09-12T23:59:00Z",
-  "tags": ["printer", "bambu", "combo"],
-  "pinned": true
+    "id": "mh-bambu-p1s-combo",
+    "merchant": "MatterHackers",
+    "title": "Bambu Lab P1S Combo (with AMS)",
+    "cta": "$150 off (~15%) — now $819",
+    "url": "https://www.matterhackers.com/store/l/bambu-lab-p1s-3d-printer/sk/M8DMRAAJ",
+    "code": "",
+    "price": "$819",
+    "note": "In-stock — ships tomorrow (list $969)",
+    "expiresAt": "2025-09-12T23:59:00Z",
+    "tags": ["printer", "bambu", "combo"],
+    "pinned": true
   },
   {
-  "id": "creality-k1c-corexy",
-  "merchant": "Creality",
-  "title": "Creality K1C CoreXY Printer",
-  "cta": "$40 off (~7%) — now $499",
-  "url": "https://www.creality.shop/products/creality-k1c-high-speed-3d-printer-on-sale",
-  "code": "",
-  "price": "$499",
-  "note": "Price drop from $539",
-  "expiresAt": "2025-09-11T23:59:00Z",
-  "tags": ["printer", "corexy"],
-  "pinned": false
+    "id": "sunlu-pla-bundle",
+    "merchant": "Amazon",
+    "title": "SUNLU 16-Color PLA Filament (4 kg)",
+    "cta": "5% off — 4 kg for $69.99",
+    "url": "https://www.amazon.com/dp/B0DK94RRQQ",
+    "code": "",
+    "price": "$69.99",
+    "note": "16 × 0.25 kg assorted spools (list $73.99)",
+    "expiresAt": "2025-09-10T23:59:00Z",
+    "tags": ["filament", "pla", "bundle"],
+    "pinned": false
   },
   {
-  "id": "creality-k1c-corexy",
-  "merchant": "Creality (US Store)",
-  "title": "Creality K1C CoreXY Printer",
-  "cta": "$40 off (~7%) — now $499",
-  "url": "https://store.creality.com/products/k1c-3d-printer",
-  "code": "",
-  "price": "$499",
-  "note": "Price drop from $539 — U.S. official store",
-  "expiresAt": "2025-09-11T23:59:00Z",
-  "tags": ["printer", "corexy"],
-  "pinned": false
+    "id": "creality-k1c-corexy",
+    "merchant": "Creality (US Store)",
+    "title": "Creality K1C CoreXY Printer",
+    "cta": "$40 off (~7%) — now $499",
+    "url": "https://store.creality.com/products/k1c-3d-printer",
+    "code": "",
+    "price": "$499",
+    "note": "Price drop from $539 — official U.S. store",
+    "expiresAt": "2025-09-11T23:59:00Z",
+    "tags": ["printer", "corexy"],
+    "pinned": false
   }
+  ]
+
 
 
 ]
