@@ -1,5 +1,5 @@
 [
-  [
+
   {
     "id": "mh-bambu-p1s-combo",
     "merchant": "MatterHackers",
@@ -39,8 +39,6 @@
     "tags": ["printer", "corexy"],
     "pinned": false
   }
-  ]
-
 
 
 ]
