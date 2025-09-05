@@ -1,5 +1,8 @@
 ---
-import "../styles/global.css";   // <- loads Tailwind
+import "../styles/global.css"; // Tailwind
+import deals from "../data/deals.json";
+
+// ---- Brand / Socials ----
 const brand = { green: "#22C55E" };
 const socials = [
   { label: "YouTube", href: "https://youtube.com/@LayerLootHQ" },
@@ -7,11 +10,63 @@ const socials = [
   { label: "X (Twitter)", href: "https://x.com/LayerLootHQ" },
   { label: "Reddit", href: "https://reddit.com/user/LayerLoot" },
 ];
-const sampleDeals = [
-  { store: "Anycubic", item: "Kobra 2 Pro", price: "$229", code: "STACK10", ends: "Ends Sun 11:59pm" },
-  { store: "Bambu Lab", item: "AMS Hub Bundle", price: "$25 off", code: "BM10 + CART5", ends: "While supplies last" },
-  { store: "Overture", item: "PLA+ 1kg", price: "$12.99", code: "AUTO", ends: "Lightning deal" },
-];
+
+// ---- Helpers ----
+const now = new Date();
+
+const safeDate = (iso?: string) => {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return isNaN(d.getTime()) ? null : d;
+};
+
+const isExpired = (d) => {
+  const dt = safeDate(d.expiresAt);
+  return !!(dt && dt.getTime() < now.getTime());
+};
+
+const fmtEnds = (d) => {
+  const dt = safeDate(d.expiresAt);
+  if (!dt) return "";
+  const diffMs = dt.getTime() - now.getTime();
+  if (diffMs <= 0) return "Expired";
+
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr = Math.floor(diffMin / 60);
+  const remMin = diffMin % 60;
+
+  const sameDay = dt.toDateString() === now.toDateString();
+
+  if (diffMin < 60) return `Ends in ${diffMin}m`;
+  if (sameDay) return `Ends in ${diffHr}h ${remMin ? remMin + "m" : ""}`.trim();
+
+  // e.g., "Ends Mon, Sep 8 · 11:59 PM"
+  const opts: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  };
+  return `Ends ${dt.toLocaleString("en-US", opts)}`;
+};
+
+// ---- Live deals list ----
+// 1) keep only non-expired
+// 2) sort: pinned first, then earliest expiresAt first (no date -> bottom)
+const liveDeals = (deals as any[])
+  .filter((d) => !isExpired(d))
+  .sort((a, b) => {
+    // pinned desc
+    const pa = a.pinned ? 1 : 0;
+    const pb = b.pinned ? 1 : 0;
+    if (pb - pa !== 0) return pb - pa;
+
+    // expiresAt asc (undefined -> Infinity)
+    const ea = safeDate(a.expiresAt)?.getTime() ?? Number.POSITIVE_INFINITY;
+    const eb = safeDate(b.expiresAt)?.getTime() ?? Number.POSITIVE_INFINITY;
+    return ea - eb;
+  });
 ---
 
 <html lang="en" class="bg-black">
@@ -20,7 +75,10 @@ const sampleDeals = [
     <meta name="viewport" content="width=device-width" />
 
     <title>LayerLoot — 3D Printing Deals</title>
-    <meta name="description" content="Daily discounts on 3D printers, filament, resin, and must-have upgrades. Clean curation. Some links may be affiliate-supported." />
+    <meta
+      name="description"
+      content="Daily discounts on 3D printers, filament, resin, and must-have upgrades. Clean curation. Some links may be affiliate-supported."
+    />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://www.layerloot.com/" />
@@ -44,7 +102,6 @@ const sampleDeals = [
     <meta name="twitter:site" content="@LayerLootHQ" />
     <meta name="twitter:creator" content="@LayerLootHQ" />
 
-
     <!-- Favicons / PWA -->
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -60,25 +117,23 @@ const sampleDeals = [
   </head>
 
   <body class="min-h-screen text-white selection:bg-emerald-300/20">
+    <!-- HERO -->
     <section class="relative overflow-hidden">
       <div aria-hidden class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.15),transparent_55%)]"></div>
       <div class="mx-auto max-w-6xl px-6 pb-16 pt-20 sm:pt-28 text-center">
-        <!-- Logo as image -->
-        <img 
-        src="/logo.svg?v=3"
-        alt="LayerLoot — 3D Printing Deals" 
-        class="mx-auto h-20 sm:h-24"
+        <img
+          src="/logo.svg?v=3"
+          alt="LayerLoot — 3D Printing Deals"
+          class="mx-auto h-20 sm:h-24"
         />
-
-<!-- Hidden text for SEO + accessibility -->
-<h1 class="sr-only">LayerLoot — 3D Printing Deals</h1>
-
+        <h1 class="sr-only">LayerLoot — 3D Printing Deals</h1>
 
         <p class="mt-3 text-xl font-medium text-zinc-200">3D Printing Deals</p>
         <p class="mx-auto mt-4 max-w-2xl text-zinc-400">
           Daily discounts, flash sales, and stackable codes on printers, filament, resin & must-have upgrades.
           Some links are affiliate-supported—helps keep alerts free.
         </p>
+
         <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
             href="mailto:contact@layerloot.com?subject=Join%20LayerLoot%20Waitlist&body=Please%20add%20me%20to%20LayerLoot%20deal%20alerts."
@@ -88,12 +143,13 @@ const sampleDeals = [
             Join the waitlist
           </a>
           <a
-            href="#how-it-works"
+            href="#deals"
             class="inline-flex items-center rounded-2xl border border-zinc-800 px-6 py-3 text-base font-semibold text-zinc-200 transition hover:bg-zinc-900"
           >
-            How it works
+            See today’s deals
           </a>
         </div>
+
         <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-zinc-400">
           {socials.map((s) => (
             <a class="rounded-full border border-zinc-800 px-4 py-1.5 transition hover:border-zinc-700 hover:text-zinc-200" href={s.href}>{s.label}</a>
@@ -102,23 +158,67 @@ const sampleDeals = [
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-10">
-      <h2 class="text-lg font-semibold text-zinc-200">Example deal format</h2>
-      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {sampleDeals.map((d) => (
-          <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-4 shadow-sm transition hover:border-zinc-700">
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-zinc-400">{d.store}</span>
-              <span class="rounded-full bg-emerald-400/10 px-2 py-0.5 text-xs font-medium text-emerald-300">{d.ends}</span>
-            </div>
-            <h3 class="mt-2 text-lg font-semibold" style={`color:${brand.green}`}>{d.item}</h3>
-            <p class="mt-1 text-sm text-zinc-300">{d.price}</p>
-            <p class="mt-1 text-xs text-zinc-400">Code: {d.code}</p>
-          </div>
-        ))}
+    <!-- LIVE DEALS -->
+    <section id="deals" class="mx-auto max-w-6xl px-6 py-10">
+      <div class="flex items-end justify-between">
+        <h2 class="text-lg font-semibold text-zinc-200">Live deals</h2>
+        <p class="text-xs text-zinc-500">
+          Auto-sorted: <span class="text-zinc-300">Featured</span> first, then soonest ending.
+        </p>
       </div>
+
+      {
+        liveDeals.length === 0 ? (
+          <div class="mt-6 rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 text-zinc-300">
+            No active deals right now. Check back soon.
+          </div>
+        ) : (
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {liveDeals.map((d) => (
+              <a
+                href={d.url}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                class="group block rounded-2xl bg-neutral-900 p-4 ring-1 ring-white/10 transition hover:ring-emerald-500"
+              >
+                <div class="mb-2 flex items-center justify-between">
+                  <div class="text-sm text-white/70">{d.merchant}</div>
+                  {
+                    d.pinned && (
+                      <span class="text-[10px] px-2 py-1 rounded-full bg-emerald-600/20 text-emerald-300 ring-1 ring-emerald-500/30">Featured</span>
+                    )
+                  }
+                </div>
+
+                <div class="text-lg font-semibold text-white">{d.title}</div>
+
+                {d.price && <div class="mt-1 text-white/90">{d.price}</div>}
+
+                {d.cta && <div class="mt-2 text-sm text-emerald-300">{d.cta}</div>}
+
+                {(d.code || d.note) && (
+                  <div class="mt-2 text-xs text-white/60">
+                    {d.code && (
+                      <span>
+                        Code: <span class="font-mono text-white/80">{d.code}</span>
+                      </span>
+                    )}
+                    {d.code && d.note && <span> • </span>}
+                    {d.note && <span>{d.note}</span>}
+                  </div>
+                )}
+
+                {d.expiresAt && (
+                  <div class="mt-3 text-[11px] text-white/50">{fmtEnds(d)}</div>
+                )}
+              </a>
+            ))}
+          </div>
+        )
+      }
     </section>
 
+    <!-- HOW IT WORKS -->
     <section id="how-it-works" class="mx-auto max-w-6xl px-6 py-16">
       <div class="grid gap-6 md:grid-cols-3">
         <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6">
@@ -136,6 +236,7 @@ const sampleDeals = [
       </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="border-t border-zinc-900/80 bg-zinc-950/40">
       <div class="mx-auto flex max-w-6xl flex-col sm:flex-row items-center justify-between gap-3 px-6 py-8">
         <p class="text-sm text-zinc-400">© {new Date().getFullYear()} LayerLoot · A Veracta Media project · contact@layerloot.com</p>
@@ -148,3 +249,4 @@ const sampleDeals = [
     </footer>
   </body>
 </html>
+
