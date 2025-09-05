@@ -40,7 +40,6 @@ const fmtEnds = (d) => {
   if (diffMin < 60) return `Ends in ${diffMin}m`;
   if (sameDay) return `Ends in ${diffHr}h ${remMin ? remMin + "m" : ""}`.trim();
 
-  // e.g., "Ends Mon, Sep 8 · 11:59 PM"
   const opts: Intl.DateTimeFormatOptions = {
     weekday: "short",
     month: "short",
@@ -51,18 +50,13 @@ const fmtEnds = (d) => {
   return `Ends ${dt.toLocaleString("en-US", opts)}`;
 };
 
-// ---- Live deals list ----
-// 1) keep only non-expired
-// 2) sort: pinned first, then earliest expiresAt first (no date -> bottom)
+// ---- Live deals: pinned first, then earliest expiry ----
 const liveDeals = (deals as any[])
   .filter((d) => !isExpired(d))
   .sort((a, b) => {
-    // pinned desc
     const pa = a.pinned ? 1 : 0;
     const pb = b.pinned ? 1 : 0;
     if (pb - pa !== 0) return pb - pa;
-
-    // expiresAt asc (undefined -> Infinity)
     const ea = safeDate(a.expiresAt)?.getTime() ?? Number.POSITIVE_INFINITY;
     const eb = safeDate(b.expiresAt)?.getTime() ?? Number.POSITIVE_INFINITY;
     return ea - eb;
@@ -181,13 +175,31 @@ const liveDeals = (deals as any[])
                 rel="nofollow sponsored noopener"
                 class="group block rounded-2xl bg-neutral-900 p-4 ring-1 ring-white/10 transition hover:ring-emerald-500"
               >
+                <!-- IMAGE (optional) -->
+                <div class="mb-3 overflow-hidden rounded-xl">
+                  {d.image ? (
+                    <img
+                      src={d.image}
+                      alt={d.imageAlt || d.title}
+                      loading="lazy"
+                      decoding="async"
+                      width="800"
+                      height="500"
+                      class="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  ) : (
+                    <div
+                      class="h-40 w-full rounded-xl bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.15),transparent_55%)]"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+
                 <div class="mb-2 flex items-center justify-between">
                   <div class="text-sm text-white/70">{d.merchant}</div>
-                  {
-                    d.pinned && (
-                      <span class="text-[10px] px-2 py-1 rounded-full bg-emerald-600/20 text-emerald-300 ring-1 ring-emerald-500/30">Featured</span>
-                    )
-                  }
+                  {d.pinned && (
+                    <span class="text-[10px] px-2 py-1 rounded-full bg-emerald-600/20 text-emerald-300 ring-1 ring-emerald-500/30">Featured</span>
+                  )}
                 </div>
 
                 <div class="text-lg font-semibold text-white">{d.title}</div>
@@ -249,4 +261,5 @@ const liveDeals = (deals as any[])
     </footer>
   </body>
 </html>
+
 
