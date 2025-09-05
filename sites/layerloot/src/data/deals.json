@@ -26,17 +26,18 @@
   "pinned": false
   },
   {
-  "id": "sunlu-pla-bundle",
-  "merchant": "Amazon",
-  "title": "SUNLU 16-Color PLA Filament (4 kg)",
-  "cta": "5% off — 4 kg for $69.99",
-  "url": "https://www.amazon.com/dp/B0DK94RRQQ",
+  "id": "creality-k1c-corexy",
+  "merchant": "Creality (US Store)",
+  "title": "Creality K1C CoreXY Printer",
+  "cta": "$40 off (~7%) — now $499",
+  "url": "https://store.creality.com/products/creality-k1c-3d-printer",
   "code": "",
-  "price": "$69.99",
-  "note": "16 × 0.25 kg assorted spools",
-  "expiresAt": "2025-09-10T23:59:00Z",
-  "tags": ["filament", "pla", "bundle"],
+  "price": "$499",
+  "note": "Price drop from $539 — U.S. official store",
+  "expiresAt": "2025-09-11T23:59:00Z",
+  "tags": ["printer", "corexy"],
   "pinned": false
   }
+
 
 ]
