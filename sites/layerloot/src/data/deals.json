@@ -1,15 +1,15 @@
 [
   {
-    "id": "mh-bambu-p1s",
+    "id": "mh-bambu-p1s-combo",
     "merchant": "MatterHackers",
-    "title": "Bambu Lab P1S",
-    "cta": "Save $50",
-    "url": "https://example.com/bambu-p1s", 
+    "title": "Bambu Lab P1S Combo (with AMS)",
+    "cta": "Save $150",
+    "url": "https://www.matterhackers.com/store/l/bambu-lab-p1s-3d-printer/sk/M8DMRAAJ", 
     "code": "",
-    "price": "",
-    "note": "Free ship on orders $99+",
-    "expiresAt": "2025-09-08T23:59:00Z",
-    "tags": ["printer", "bambu"],
+    "price": "$819",
+    "note": "In-stock — ships tomorrow",
+    "expiresAt": "2025-09-12T23:59:00Z",
+    "tags": ["printer", "bambu", "combo"],
     "pinned": true
   },
   {
