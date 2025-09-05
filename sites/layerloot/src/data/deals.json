@@ -1,0 +1,41 @@
+[
+  {
+    "id": "mh-bambu-p1s",
+    "merchant": "MatterHackers",
+    "title": "Bambu Lab P1S",
+    "cta": "Save $50",
+    "url": "https://example.com/bambu-p1s", 
+    "code": "",
+    "price": "",
+    "note": "Free ship on orders $99+",
+    "expiresAt": "2025-09-08T23:59:00Z",
+    "tags": ["printer", "bambu"],
+    "pinned": true
+  },
+  {
+    "id": "creality-k1c",
+    "merchant": "Creality",
+    "title": "K1C CoreXY",
+    "cta": "$70 off",
+    "url": "https://example.com/creality-k1c",
+    "code": "K1C70",
+    "price": "",
+    "note": "",
+    "expiresAt": "",
+    "tags": ["printer", "creality"],
+    "pinned": false
+  },
+  {
+    "id": "sunlu-pla",
+    "merchant": "SUNLU",
+    "title": "PLA+ Filament (1kg)",
+    "cta": "2 for $25",
+    "url": "https://example.com/sunlu-pla",
+    "code": "",
+    "price": "",
+    "note": "Assorted colors",
+    "expiresAt": "2025-09-06T23:59:00Z",
+    "tags": ["filament"],
+    "pinned": false
+  }
+]
