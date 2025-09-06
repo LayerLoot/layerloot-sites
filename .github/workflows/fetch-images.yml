@@ -1,16 +1,15 @@
 name: Fetch deal images
 
 on:
+  workflow_dispatch:        # <-- adds the "Run workflow" button
   push:
     branches: [ main ]
     paths:
       - 'sites/layerloot/src/data/deals.json'
       - 'sites/layerloot/scripts/**'
   schedule:
-    - cron: '0 9 * * *'   # optional: run daily at 09:00 UTC
+    - cron: '0 9 * * *'     # optional
 
-permissions:
-  contents: write   # allow the workflow to commit/push image files back
 
 jobs:
   run:
