@@ -1,0 +1,41 @@
+name: Fetch deal images
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'sites/layerloot/src/data/deals.json'
+      - 'sites/layerloot/scripts/**'
+  schedule:
+    - cron: '0 9 * * *'   # optional: run daily at 09:00 UTC
+
+permissions:
+  contents: write   # allow the workflow to commit/push image files back
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sites/layerloot
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: node scripts/fetch-deal-images.mjs
+      - name: Commit changes (if any)
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "layerloot-bot"
+            git config user.email "bot@layerloot.com"
+            git add -A
+            git commit -m "chore: auto-fetch/crop deal images"
+            git push
+          else
+            echo "No changes to commit"
+          fi
