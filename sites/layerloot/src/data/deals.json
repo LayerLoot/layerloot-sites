@@ -1,18 +1,21 @@
 [
-
   {
     "id": "mh-bambu-p1s-combo",
     "merchant": "MatterHackers",
     "title": "Bambu Lab P1S Combo (with AMS)",
     "cta": "$150 off (~15%) — now $819",
     "url": "https://www.matterhackers.com/store/l/bambu-lab-p1s-3d-printer/sk/M8DMRAAJ",
-    "image": "/images/bambu-p1s-combo.webp",
+    "image": "/images/mh-bambu-p1s-combo.webp",
     "imageAlt": "Bambu Lab P1S Combo 3D Printer with AMS",
     "code": "",
     "price": "$819",
     "note": "In-stock — ships tomorrow (list $969)",
     "expiresAt": "2025-09-12T23:59:00Z",
-    "tags": ["printer", "bambu", "combo"],
+    "tags": [
+      "printer",
+      "bambu",
+      "combo"
+    ],
     "pinned": true
   },
   {
@@ -21,14 +24,18 @@
     "title": "SUNLU 16-Color PLA Filament (4 kg)",
     "cta": "5% off — 4 kg for $69.99",
     "url": "https://www.amazon.com/dp/B0DK94RRQQ",
-    "image": "/images/sunlu-16-color-pla.jpg",
-    "imageAlt": "SUNLU 16-Color PLA Filament Bundle 4kg",
     "code": "",
     "price": "$69.99",
     "note": "16 × 0.25 kg assorted spools (list $73.99)",
     "expiresAt": "2025-09-10T23:59:00Z",
-    "tags": ["filament", "pla", "bundle"],
-    "pinned": false
+    "tags": [
+      "filament",
+      "pla",
+      "bundle"
+    ],
+    "pinned": false,
+    "image": "/images/sunlu-pla-bundle.webp",
+    "imageAlt": "SUNLU 16-Color PLA Filament (4 kg)"
   },
   {
     "id": "creality-k1c-corexy",
@@ -36,15 +43,16 @@
     "title": "Creality K1C CoreXY Printer",
     "cta": "$40 off (~7%) — now $499",
     "url": "https://store.creality.com/products/k1c-3d-printer",
-    "image": "/images/creality-k1c.webp",
     "imageAlt": "Creality K1C CoreXY 3D Printer",
     "code": "",
     "price": "$499",
     "note": "Price drop from $539 — official U.S. store",
     "expiresAt": "2025-09-11T23:59:00Z",
-    "tags": ["printer", "corexy"],
-    "pinned": false
+    "tags": [
+      "printer",
+      "corexy"
+    ],
+    "pinned": false,
+    "image": "/images/creality-k1c-corexy.webp"
   }
-
-
 ]
