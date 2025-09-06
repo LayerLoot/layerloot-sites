@@ -106,7 +106,7 @@ const liveDeals: Deal[] = (deals as Deal[])
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="LayerLoot — 3D Printing Deals" />
-    <meta name="twitter:description" content="Daily discounts on 3D printers, filament, resin, and must-have gear." />
+    <meta name="twitter:description" content="Daily discounts on 3D printers, filament, resin & must-have gear." />
     <meta name="twitter:image" content="https://www.layerloot.com/og-image.png" />
     <meta name="twitter:site" content="@LayerLootHQ" />
     <meta name="twitter:creator" content="@LayerLootHQ" />
@@ -128,18 +128,18 @@ const liveDeals: Deal[] = (deals as Deal[])
   <body class="min-h-screen text-white selection:bg-emerald-300/20">
     <!-- HERO -->
     <section class="relative overflow-hidden">
-      <div aria-hidden class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.15),transparent_55%)]"></div>
+      <div
+        aria-hidden
+        class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.15),transparent_55%)]"
+      ></div>
+
       <div class="mx-auto max-w-6xl px-6 pb-16 pt-20 sm:pt-28 text-center">
-        <img
-          src="/logo.svg?v=3"
-          alt="LayerLoot — 3D Printing Deals"
-          class="mx-auto h-20 sm:h-24"
-        />
+        <img src="/logo.svg?v=3" alt="LayerLoot — 3D Printing Deals" class="mx-auto h-20 sm:h-24" />
         <h1 class="sr-only">LayerLoot — 3D Printing Deals</h1>
 
         <p class="mt-3 text-xl font-medium text-zinc-200">3D Printing Deals</p>
         <p class="mx-auto mt-4 max-w-2xl text-zinc-400">
-          Daily discounts, flash sales, and stackable codes on printers, filament, resin & must-have upgrades.
+          Daily discounts, flash sales, and stackable codes on printers, filament, resin &amp; must-have upgrades.
           Some links are affiliate-supported—helps keep alerts free.
         </p>
 
@@ -152,116 +152,170 @@ const liveDeals: Deal[] = (deals as Deal[])
             Join the waitlist
           </a>
           <a
-            href="#deals"
+            href="#how-it-works"
             class="inline-flex items-center rounded-2xl border border-zinc-800 px-6 py-3 text-base font-semibold text-zinc-200 transition hover:bg-zinc-900"
           >
-            See today’s deals
+            How it works
           </a>
         </div>
 
         <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-zinc-400">
           {socials.map((s) => (
-            <a class="rounded-full border border-zinc-800 px-4 py-1.5 transition hover:border-zinc-700 hover:text-zinc-200" href={s.href}>{s.label}</a>
+            <a
+              class="rounded-full border border-zinc-800 px-4 py-1.5 transition hover:border-zinc-700 hover:text-zinc-200"
+              href={s.href}
+            >
+              {s.label}
+            </a>
           ))}
         </div>
       </div>
     </section>
 
     <!-- LIVE DEALS -->
-     <section id="deals" class="mx-auto max-w-6xl px-6 py-10">
-        <div class="flex items-end justify-between">
-          <h2 class="text-lg font-semibold text-zinc-200">Live deals</h2>
-          <p class="text-xs text-zinc-500">
-            Auto-sorted: <span class="text-zinc-300">Featured</span> first, then soonest ending.
-          </p>
-        </div>
+    <section id="deals" class="mx-auto max-w-6xl px-6 py-10">
+      <div class="flex items-end justify-between">
+        <h2 class="text-lg font-semibold text-zinc-200">Live deals</h2>
+        <p class="text-xs text-zinc-500">
+          Auto-sorted: <span class="text-zinc-300">Featured</span> first, then soonest ending.
+        </p>
+      </div>
 
-        {
-          liveDeals.length === 0 ? (
-            <div class="mt-6 rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 text-zinc-300">
-              No active deals right now. Check back soon.
-            </div>
-          ) : (
-            <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {liveDeals.map((d: Deal) => (
-                <a
-                  href={d.url}
-                  target="_blank"
-                  rel="nofollow sponsored noopener"
-                  class="group block rounded-2xl bg-neutral-900 p-4 ring-1 ring-white/10 transition hover:ring-emerald-500 transform will-change-transform hover:scale-[1.01] duration-200"
-                >
+      <!-- Filter bar -->
+      <div data-filter-bar class="mt-4 flex flex-wrap gap-2 text-sm">
+        <button
+          type="button"
+          data-filter="all"
+          class="rounded-full border px-3 py-1.5 transition border-zinc-800 text-zinc-300 hover:border-zinc-700"
+          aria-pressed="true"
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-filter="printer"
+          class="rounded-full border px-3 py-1.5 transition border-zinc-800 text-zinc-300 hover:border-zinc-700"
+          aria-pressed="false"
+        >
+          Printers
+        </button>
+        <button
+          type="button"
+          data-filter="filament"
+          class="rounded-full border px-3 py-1.5 transition border-zinc-800 text-zinc-300 hover:border-zinc-700"
+          aria-pressed="false"
+        >
+          Filament
+        </button>
+        <button
+          type="button"
+          data-filter="resin"
+          class="rounded-full border px-3 py-1.5 transition border-zinc-800 text-zinc-300 hover:border-zinc-700"
+          aria-pressed="false"
+        >
+          Resin
+        </button>
+      </div>
 
-                  <!-- IMAGE: fixed square (uniform), subtle zoom on hover -->
-                  <div class="mb-3 overflow-hidden rounded-xl">
-                    <div class="relative w-full pb-[100%]">
-                      {d.image ? (
-                        <img
-                          src={d.image}
-                          alt={d.imageAlt || d.title}
-                          loading="lazy"
-                          decoding="async"
-                          class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
-                        />
-                      ) : (
-                        <div
-                          class="absolute inset-0 rounded-xl bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.15),transparent_55%)]"
-                          aria-hidden="true"
-                        />
-                      )}
+      {
+        liveDeals.length === 0 ? (
+          <div class="mt-6 rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 text-zinc-300">
+            No active deals right now. Check back soon.
+          </div>
+        ) : (
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {liveDeals.map((d: Deal) => (
+              <a
+                data-deal-card
+                data-tags={(d.tags && d.tags.join(",")) || ""}
+                href={d.url}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                class="group block rounded-2xl bg-neutral-900 p-4 ring-1 ring-white/10 transition hover:ring-emerald-500 transform will-change-transform hover:scale-[1.01] duration-200"
+                aria-hidden="false"
+              >
+                <!-- IMAGE -->
+                <div class="mb-3 overflow-hidden rounded-xl">
+                  <div class="relative w-full pb-[100%]">
+                    {d.image ? (
+                      <img
+                        src={d.image}
+                        alt={d.imageAlt || d.title}
+                        loading="lazy"
+                        decoding="async"
+                        class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                      />
+                    ) : (
+                      <div
+                        class="absolute inset-0 rounded-xl bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.15),transparent_55%)]"
+                        aria-hidden="true"
+                      />
+                    )}
 
-                      <!-- Hover overlay with extra details -->
-                      <div class="pointer-events-none absolute inset-0 rounded-xl bg-black/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                        <div class="pointer-events-auto absolute bottom-0 w-full p-3 text-[13px] leading-snug text-white/90">
-                          {d.cta && <div class="font-semibold text-emerald-300">{d.cta}</div>}
-                          {d.code && (
-                            <div class="mt-1 flex items-center gap-2">
-                              <div>
-                                Code: <span class="font-mono text-white/80">{d.code}</span>
-                              </div>
-                              <button
-                                type="button"
-                                class="rounded-md bg-white/10 px-2 py-0.5 text-[12px] text-white/90 hover:bg-white/20"
-                                data-copy-code={d.code}
-                              >
-                                Copy
-                              </button>
+                    <!-- Hover overlay -->
+                    <div
+                      class="pointer-events-none absolute inset-0 rounded-xl bg-black/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    >
+                      <div class="pointer-events-auto absolute bottom-0 w-full p-3 text-[13px] leading-snug text-white/90">
+                        {d.cta && <div class="font-semibold text-emerald-300">{d.cta}</div>}
+
+                        {d.code ? (
+                          <div class="mt-1 flex items-center gap-2">
+                            <div>
+                              Code: <span class="font-mono text-white/80">{d.code}</span>
                             </div>
-                          )}
+                            <button
+                              type="button"
+                              class="rounded-md bg-white/10 px-2 py-0.5 text-[12px] text-white/90 hover:bg-white/20"
+                              data-copy-code={d.code}
+                            >
+                              Copy
+                            </button>
+                          </div>
+                        ) : (
+                          <div class="mt-1">
+                            <button
+                              type="button"
+                              class="rounded-md bg-white/10 px-2 py-0.5 text-[12px] text-white/90 hover:bg-white/20"
+                              data-copy-link={d.url}
+                            >
+                              Copy link
+                            </button>
+                          </div>
+                        )}
 
-                          {d.note && <div class="mt-1 text-white/80">{d.note}</div>}
-                        </div>
+                        {d.note && <div class="mt-1 text-white/80">{d.note}</div>}
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div class="mb-2 flex items-center justify-between">
-                    <div class="text-sm text-white/70">{d.merchant}</div>
-                    {d.pinned && (
-                      <span class="text-[10px] px-2 py-1 rounded-full bg-emerald-600/20 text-emerald-300 ring-1 ring-emerald-500/30">Featured</span>
-                    )}
-                  </div>
-
-                  <div class="text-lg font-semibold text-white">{d.title}</div>
-
-                  {d.price && <div class="mt-1 text-white/90">{d.price}</div>}
-
-                  {d.expiresAt && (
-                    <div class="mt-3 text-[11px] text-white/50">{fmtEnds(d)}</div>
+                <div class="mb-2 flex items-center justify-between">
+                  <div class="text-sm text-white/70">{d.merchant}</div>
+                  {d.pinned && (
+                    <span
+                      class="text-[10px] px-2 py-1 rounded-full bg-emerald-600/20 text-emerald-300 ring-1 ring-emerald-500/30"
+                      >Featured</span
+                    >
                   )}
-                </a>
-              ))}
-            </div>
-          )
-        }
-      </section>
+                </div>
 
+                <div class="text-lg font-semibold text-white">{d.title}</div>
+                {d.price && <div class="mt-1 text-white/90">{d.price}</div>}
+                {d.expiresAt && <div class="mt-3 text-[11px] text-white/50">{fmtEnds(d)}</div>}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </section>
 
     <!-- HOW IT WORKS -->
     <section id="how-it-works" class="mx-auto max-w-6xl px-6 py-16">
       <div class="grid gap-6 md:grid-cols-3">
         <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6">
           <h3 class="text-lg font-semibold" style={`color:${brand.green}`}>Daily deal drops</h3>
-          <p class="mt-2 text-zinc-300">Printers, filament, resin & upgrades from reputable sellers—no spammy listings.</p>
+          <p class="mt-2 text-zinc-300">Printers, filament, resin &amp; upgrades from reputable sellers—no spammy listings.</p>
         </div>
         <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6">
           <h3 class="text-lg font-semibold" style={`color:${brand.green}`}>Flash sales + stackable codes</h3>
@@ -277,7 +331,9 @@ const liveDeals: Deal[] = (deals as Deal[])
     <!-- FOOTER -->
     <footer class="border-t border-zinc-900/80 bg-zinc-950/40">
       <div class="mx-auto flex max-w-6xl flex-col sm:flex-row items-center justify-between gap-3 px-6 py-8">
-        <p class="text-sm text-zinc-400">© {new Date().getFullYear()} LayerLoot · A Veracta Media project · contact@layerloot.com</p>
+        <p class="text-sm text-zinc-400">
+          © {new Date().getFullYear()} LayerLoot · A Veracta Media project · contact@layerloot.com
+        </p>
         <div class="flex items-center gap-3 text-sm">
           <a class="text-zinc-400 hover:text-zinc-200" href="mailto:support@layerloot.com">Support</a>
           <span class="text-zinc-700">•</span>
@@ -285,23 +341,82 @@ const liveDeals: Deal[] = (deals as Deal[])
         </div>
       </div>
     </footer>
-  <script is:inline>
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-copy-code]');
-      if (!btn) return;
-      e.preventDefault(); // stop the <a> navigation
-      const code = btn.getAttribute('data-copy-code');
-      navigator.clipboard.writeText(code).then(() => {
-        const old = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(() => (btn.textContent = old), 1200);
-      }).catch(() => {
-        // fallback text if clipboard fails
-        alert('Code: ' + code);
+
+    <!-- Inline scripts: copy + filters -->
+    <script is:inline>
+      // Copy code/link
+      document.addEventListener("click", (e) => {
+        const codeBtn = e.target.closest?.("[data-copy-code]");
+        if (codeBtn) {
+          e.preventDefault();
+          const code = codeBtn.getAttribute("data-copy-code");
+          navigator.clipboard
+            .writeText(code)
+            .then(() => {
+              const old = codeBtn.textContent;
+              codeBtn.textContent = "Copied!";
+              setTimeout(() => (codeBtn.textContent = old), 1200);
+            })
+            .catch(() => alert("Code: " + code));
+          return;
+        }
+        const linkBtn = e.target.closest?.("[data-copy-link]");
+        if (linkBtn) {
+          e.preventDefault();
+          const url = linkBtn.getAttribute("data-copy-link");
+          navigator.clipboard
+            .writeText(url)
+            .then(() => {
+              const old = linkBtn.textContent;
+              linkBtn.textContent = "Copied!";
+              setTimeout(() => (linkBtn.textContent = old), 1200);
+            })
+            .catch(() => alert("Link: " + url));
+          return;
+        }
       });
-    });
-  </script>
+
+      // Tag filters
+      (function () {
+        const bar = document.querySelector("[data-filter-bar]");
+        if (!bar) return;
+
+        const btns = Array.from(bar.querySelectorAll("[data-filter]"));
+        const cards = Array.from(document.querySelectorAll("[data-deal-card]"));
+
+        function setActive(key) {
+          btns.forEach((b) => {
+            const active = b.getAttribute("data-filter") === key;
+            b.setAttribute("aria-pressed", active ? "true" : "false");
+            b.classList.toggle("bg-emerald-600/20", active);
+            b.classList.toggle("text-emerald-300", active);
+            b.classList.toggle("border-emerald-500/40", active);
+          });
+
+          cards.forEach((card) => {
+            const tags = (card.getAttribute("data-tags") || "")
+              .split(",")
+              .map((s) => s.trim().toLowerCase())
+              .filter(Boolean);
+            const show = key === "all" || tags.includes(key);
+            card.classList.toggle("hidden", !show);
+            card.setAttribute("aria-hidden", String(!show));
+          });
+        }
+
+        // Click to filter
+        bar.addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-filter]");
+          if (!btn) return;
+          e.preventDefault();
+          setActive(btn.getAttribute("data-filter") || "all");
+        });
+
+        // Start from URL ?t=printer if present; else show all
+        const init = new URL(location.href).searchParams.get("t");
+        if (init && ["printer", "filament", "resin"].includes(init)) setActive(init);
+        else setActive("all");
+      })();
+    </script>
   </body>
 </html>
-
-
