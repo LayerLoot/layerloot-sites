@@ -2,16 +2,33 @@
 import "../styles/global.css"; // Tailwind
 import deals from "../data/deals.json";
 
-// ---- Brand / Socials ----
+// ----- Brand / Socials -----
 const brand = { green: "#22C55E" };
 const socials = [
   { label: "YouTube", href: "https://youtube.com/@LayerLootHQ" },
   { label: "Instagram", href: "https://instagram.com/LayerLootHQ" },
   { label: "X (Twitter)", href: "https://x.com/LayerLootHQ" },
   { label: "Reddit", href: "https://reddit.com/user/LayerLoot" },
-];
+] as const;
 
-// ---- Helpers ----
+// ----- Types -----
+type Deal = {
+  id: string;
+  merchant: string;
+  title: string;
+  cta?: string;
+  url: string;
+  code?: string;
+  price?: string;
+  note?: string;
+  expiresAt?: string;
+  tags?: string[];
+  pinned?: boolean;
+  image?: string;
+  imageAlt?: string;
+};
+
+// ----- Helpers -----
 const now = new Date();
 
 const safeDate = (iso?: string) => {
@@ -20,14 +37,15 @@ const safeDate = (iso?: string) => {
   return isNaN(d.getTime()) ? null : d;
 };
 
-const isExpired = (d) => {
+const isExpired = (d: Deal): boolean => {
   const dt = safeDate(d.expiresAt);
   return !!(dt && dt.getTime() < now.getTime());
 };
 
-const fmtEnds = (d) => {
+const fmtEnds = (d: Deal): string => {
   const dt = safeDate(d.expiresAt);
   if (!dt) return "";
+
   const diffMs = dt.getTime() - now.getTime();
   if (diffMs <= 0) return "Expired";
 
@@ -36,29 +54,26 @@ const fmtEnds = (d) => {
   const remMin = diffMin % 60;
 
   const sameDay = dt.toDateString() === now.toDateString();
-
   if (diffMin < 60) return `Ends in ${diffMin}m`;
-  if (sameDay) return `Ends in ${diffHr}h ${remMin ? remMin + "m" : ""}`.trim();
+  if (sameDay) return `Ends in ${diffHr}h${remMin ? ` ${remMin}m` : ""}`;
 
-  const opts: Intl.DateTimeFormatOptions = {
+  const intlDateTimeFormatOptions: Intl.DateTimeFormatOptions = {
     weekday: "short",
     month: "short",
     day: "numeric",
     hour: "numeric",
     minute: "2-digit",
   };
-  return `Ends ${dt.toLocaleString("en-US", opts)}`;
+  return dt.toLocaleString(undefined, intlDateTimeFormatOptions);
 };
 
-// ---- Live deals: pinned first, then earliest expiry ----
-const liveDeals = (deals as any[])
-  .filter((d) => !isExpired(d))
-  .sort((a, b) => {
-    const pa = a.pinned ? 1 : 0;
-    const pb = b.pinned ? 1 : 0;
-    if (pb - pa !== 0) return pb - pa;
-    const ea = safeDate(a.expiresAt)?.getTime() ?? Number.POSITIVE_INFINITY;
-    const eb = safeDate(b.expiresAt)?.getTime() ?? Number.POSITIVE_INFINITY;
+// ----- Data pipeline -----
+const liveDeals: Deal[] = (deals as Deal[])
+  .filter((d: Deal) => !isExpired(d))
+  .sort((a: Deal, b: Deal) => Number(!!b.pinned) - Number(!!a.pinned))
+  .sort((a: Deal, b: Deal) => {
+    const ea = a.expiresAt ? safeDate(a.expiresAt)?.getTime() ?? Infinity : Infinity;
+    const eb = b.expiresAt ? safeDate(b.expiresAt)?.getTime() ?? Infinity : Infinity;
     return ea - eb;
   });
 ---
@@ -168,7 +183,7 @@ const liveDeals = (deals as any[])
             </div>
           ) : (
             <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {liveDeals.map((d) => (
+              {liveDeals.map((d: Deal) => (
                 <a
                   href={d.url}
                   target="_blank"
