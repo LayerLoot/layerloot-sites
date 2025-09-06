@@ -14,7 +14,9 @@
       "bambu",
       "combo"
     ],
-    "pinned": true
+    "pinned": true,
+    "image": "/images/mh-bambu-p1s-combo.webp",
+    "imageAlt": "Bambu Lab P1S Combo (with AMS)"
   },
   {
     "id": "sunlu-pla-bundle",
