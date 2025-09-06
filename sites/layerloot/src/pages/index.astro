@@ -34,7 +34,7 @@ const now = new Date();
 const safeDate = (iso?: string) => {
   if (!iso) return null;
   const d = new Date(iso);
-  return isNaN(d.getTime()) ? null : d;
+  return Number.isNaN(d.getTime()) ? null : d;
 };
 
 const isExpired = (d: Deal): boolean => {
@@ -67,11 +67,15 @@ const fmtEnds = (d: Deal): string => {
   return dt.toLocaleString(undefined, intlDateTimeFormatOptions);
 };
 
-// ----- Data pipeline -----
+// ----- Data pipeline (Featured first, then soonest ending) -----
 const liveDeals: Deal[] = (deals as Deal[])
   .filter((d: Deal) => !isExpired(d))
-  .sort((a: Deal, b: Deal) => Number(!!b.pinned) - Number(!!a.pinned))
   .sort((a: Deal, b: Deal) => {
+    // 1) Featured first
+    const pinDiff = Number(!!b.pinned) - Number(!!a.pinned);
+    if (pinDiff !== 0) return pinDiff;
+
+    // 2) Then by soonest ending
     const ea = a.expiresAt ? safeDate(a.expiresAt)?.getTime() ?? Infinity : Infinity;
     const eb = b.expiresAt ? safeDate(b.expiresAt)?.getTime() ?? Infinity : Infinity;
     return ea - eb;
@@ -173,19 +177,13 @@ const liveDeals: Deal[] = (deals as Deal[])
     </section>
 
     <!-- LIVE DEALS -->
-    // ----- Data pipeline -----
-    const liveDeals: Deal[] = (deals as Deal[])
-      .filter((d: Deal) => !isExpired(d))
-      .sort((a: Deal, b: Deal) => {
-        // 1) Featured first
-        const pinDiff = Number(!!b.pinned) - Number(!!a.pinned);
-        if (pinDiff !== 0) return pinDiff;
-
-        // 2) Then by soonest ending
-        const ea = a.expiresAt ? safeDate(a.expiresAt)?.getTime() ?? Infinity : Infinity;
-        const eb = b.expiresAt ? safeDate(b.expiresAt)?.getTime() ?? Infinity : Infinity;
-        return ea - eb;
-      });
+    <section id="deals" class="mx-auto max-w-6xl px-6 py-10">
+      <div class="flex items-end justify-between">
+        <h2 class="text-lg font-semibold text-zinc-200">Live deals</h2>
+        <p class="text-xs text-zinc-500">
+          Auto-sorted: <span class="text-zinc-300">Featured</span> first, then soonest ending.
+        </p>
+      </div>
 
       <!-- Filter bar -->
       <div data-filter-bar class="mt-4 flex flex-wrap gap-2 text-sm">
